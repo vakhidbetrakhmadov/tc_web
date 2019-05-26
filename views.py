@@ -9,7 +9,7 @@ def index():
 @main.route('/', methods=['POST'])
 def index_post():
 
-     def isNoneOrEmpty(x) -> bool:
+     def isNoneOrEmpty(x):
           return x == None or x == ""
 
      program = request.form.get('program')
