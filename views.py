@@ -1,4 +1,6 @@
 from flask import Blueprint, render_template, request
+import os
+import parser
 
 main = Blueprint('main', __name__)
 
@@ -47,7 +49,7 @@ def index_post():
      # use_read_only_cache, match_lib_calls, fix_params, tuner_threads, tuner_generations, pop_size, number_of_elites, 
      # outer_schedule_fusion_strategy, intra_tile_fusion_strategy)
 
-     base = "/opt/conda/anaconda/envs/tc_build/bin/python3 tc/tc_bench.py --debug=True "
+     base = "/opt/conda/anaconda/envs/tc_build/bin/python3 /Tvm-tc/tc/tc_bench.py --debug=True "
      program_part = "--prog={} ".format(program)
 
      if program == "matmul":  
@@ -79,9 +81,15 @@ def index_post():
      map_to_threads_part = "" if isNoneOrEmpty(map_to_threads) else '--mapToThreads {} '.format(map_to_threads)
      tile_part = "" if isNoneOrEmpty(tile) else '--tile {} '.format(tile)
      unroll_part = "" if isNoneOrEmpty(unroll) else '--unroll={} '.format(unroll)
-     
-     command = base + program_part + size_part + autotuner_part + tuner_threads_part + tuner_generations_part + pop_size_part + number_of_elites_part + load_from_cache_part + store_to_cache_part + use_shared_mem_part  + unroll_copy_shared_part + use_read_only_cache_part + match_lib_calls_part + fix_params_part  + outer_schedule_fusion_strategy_part + intra_tile_fusion_strategy_part + map_to_blocks_part + map_to_threads_part + tile_part + unroll_part
+
+     logfile_name = "log.txt"
+
+     command = base + program_part + size_part + autotuner_part + tuner_threads_part + tuner_generations_part + pop_size_part + number_of_elites_part + load_from_cache_part + store_to_cache_part + use_shared_mem_part  + unroll_copy_shared_part + use_read_only_cache_part + match_lib_calls_part + fix_params_part  + outer_schedule_fusion_strategy_part + intra_tile_fusion_strategy_part + map_to_blocks_part + map_to_threads_part + tile_part + unroll_part + "&>> {}".format(logfile_name)
 
      print(command)
 
-     return render_template('index.html', program=program)
+     os.system("echo "" > {}".format(logfile_name))
+     os.system(command)
+     output = parser.parse(logfile_name)
+
+     return render_template('index.html', program=output[0])
