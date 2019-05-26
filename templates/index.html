@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Title</title>
+
+    <style>
+      .split {
+        height: 100%;
+        width: 50%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        overflow-x: hidden;
+        padding-top: 20px;
+        padding-left: 20px;
+      }
+
+      .left {
+        left: 0;
+        background-color: #ffffff;
+      }
+
+      .right {
+        right: 0;
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+
+  <body>
+    <form class="split left" method="POST" action="{{ url_for('main.index_post') }}">
+        <p>
+            Program:
+            <input type="radio" name="program" id="matmul" value="matmul" onclick="javascript:showSizesList('matmul_size')" checked>
+            Matmul &nbsp; &nbsp;
+            <input type="radio" name="program" id="tmm" value="tmm" onclick="javascript:showSizesList('tmm_tbmm_size')">
+            Tmm &nbsp; &nbsp;
+            <input type="radio" name="program" id="tbmm" value="tbmm" onclick="javascript:showSizesList('tmm_tbmm_size')">
+            Tbmm &nbsp; &nbsp;
+            <input type="radio" name="program" id="conv2d" value="conv2d" onclick="javascript:showSizesList('conv2d_size')">
+            Conv2d &nbsp; &nbsp;
+            <input type="radio" name="program" id="map" value="map" onclick="javascript:showSizesList('map_size')">
+            Map &nbsp; &nbsp;
+        </p>
+
+        <p>
+          <div id="matmul_size"> 
+            Size<br>
+            <select name="matmul_size" id="matmul_size_select" onchange="javascript:showCustomSizeIfNeeded('matmul_size_select')">
+                <option value="72 26 26">72 26 26</option>
+                <option value="50 50 50">50 50 50</option>
+                <option value="128 32 256">128 32 256</option>
+                <option value="128 1024 1024">128 1024 1024</option>
+                <option value="128 4096 16384">128 4096 16384</option>
+                <option value="custom">custom</option>
+            </select>
+          </div>
+
+          <div id="tmm_tbmm_size" style="display:none"> 
+            Size<br>
+            <select name="tmm_tbmm_size" id="tmm_tbmm_size_select" onchange="javascript:showCustomSizeIfNeeded('tmm_tbmm_size_select')">
+                <option value="72 26 26 250">72 26 26 250</option>
+                <option value="72 26 26 500">72 26 26 500</option>
+                <option value="72 26 26 1024">72 26 26 1024</option>
+                <option value="50 50 50 500">50 50 50 500</option>
+                <option value="50 50 50 1024">50 50 50 1024</option>
+                <option value="custom">custom</option>
+            </select>
+          </div>
+
+          <div id="conv2d_size" style="display:none">
+            Size<br>
+            <select name="conv2d_size" id="conv2d_size_select" onchange="javascript:showCustomSizeIfNeeded('conv2d_size_select')">
+                <option value="32 16 16 14 14">32 16 16 14 14</option>
+                <option value="32 32 32 7 7">32 32 32 7 7</option>
+                <option value="32 4 4 56 56">32 4 4 56 56</option>
+                <option value="32 8 8 28 28">32 8 8 28 28</option>
+                <option value="256 256 512 14 3">256 256 512 14 3</option>
+                <option value="custom">custom</option>
+            </select>
+          </div>
+
+          <div id="map_size" style="display:none"> 
+            Size<br>
+            <select name="map_size"  id="map_size_select" onchange="javascript:showCustomSizeIfNeeded('map_size_select')">
+                <option value="1000">1000</option>
+                <option value="10000">10000</option>
+                <option value="100000">100000</option>
+                <option value="1000000">1000000</option>
+                <option value="10000000">10000000</option>
+                <option value="custom">custom</option>
+            </select>
+          </div>
+      </p>
+
+      <p>
+        <div id="custom_size" style="display:none">
+            <input type="text" name="custom_size">
+        </div>
+      </p>
+
+      <p>
+          <input type="checkbox" name="autotuner" value="true" onchange="javascript:showAutotunerOptions()"> Autotuner<br>
+          <dev id="autotuner_options" style="display:none">
+              <br>Threads<br>
+              <input type="text" name="tuner_threads"><br>
+              Generations<br>
+              <input type="text" name="tuner_generations"><br>
+              Population size<br>
+              <input type="text" name="pop_size"><br>
+              Number of elites<br>
+              <input type="text" name="number_of_elites"><br>
+          </dev>
+      </p>
+
+      <div id="manual_options" style="display:block">
+        <p>
+            Map to blocks<br>
+            <input type="text" name="map_to_blocks"><br>
+            Map to threads<br>
+            <input type="text" name="map_to_threads"><br>
+            Tile<br>
+            <input type="text" name="tile"><br>
+            Unroll<br>
+            <input type="text" name="unroll"><br><br>
+            <input type="checkbox" name="load_from_cache" value="true"> Load from cache<br>
+            <input type="checkbox" name="store_to_cache" value="true"> Store to cache<br>
+            <input type="checkbox" name="use_shared_mem" value="true"> Use shared memory<br>
+            <input type="checkbox" name="unroll_copy_shared" value="true"> Unroll the copies to and from shared memory <br>
+            <input type="checkbox" name="use_read_only_cache" value="true"> Use read only cache <br>
+            <input type="checkbox" name="match_lib_calls" value="true"> Match lib calls <br>
+            <input type="checkbox" name="fix_params" value="true"> Fix parameters before scheduling <br> <br>
+
+            Outer schedule fusion strategy:&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="outer_schedule_fusion_strategy" value="max">
+            Max &nbsp; &nbsp;
+            <input type="radio" name="outer_schedule_fusion_strategy" value="min">
+            Min &nbsp; &nbsp;
+            <input type="radio" name="outer_schedule_fusion_strategy" value="Preserve3Coincident">
+            Preserve3Coincident &nbsp; &nbsp; <br> <br>
+
+            Intra tile fusion strategy:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="intra_tile_fusion_strategy" value="max">
+            Max &nbsp; &nbsp;
+            <input type="radio" name="intra_tile_fusion_strategy" value="min">
+            Min &nbsp; &nbsp;
+            <input type="radio" name="intra_tile_fusion_strategy" value="Preserve3Coincident">
+            Preserve3Coincident &nbsp; &nbsp;
+        </p>
+      </div> 
+
+      <input type="submit">
+    </form>
+
+    <div class="split right">
+        {{ program }}
+    </div>
+
+    <script>
+      function showSizesList(id) {
+        document.getElementById("matmul_size").style.display = "matmul_size" == id ? "block" : "none"
+        document.getElementById("tmm_tbmm_size").style.display = "tmm_tbmm_size" == id ? "block" : "none"
+        document.getElementById("conv2d_size").style.display = "conv2d_size" == id ? "block" : "none"
+        document.getElementById("map_size").style.display = "map_size" == id ? "block" : "none"
+
+        if("matmul_size" == id) { 
+          showCustomSizeIfNeeded("matmul_size_select")
+        } else if("tmm_tbmm_size" == id) { 
+          showCustomSizeIfNeeded("tmm_tbmm_size_select")
+        } else if("conv2d_size" == id ) { 
+          showCustomSizeIfNeeded("conv2d_size_select")
+        } else if ("map_size" == id) { 
+          showCustomSizeIfNeeded("map_size_select")
+        }
+      }
+
+      function showCustomSizeIfNeeded(id) {
+        var element = document.getElementById(id)
+        var value = element.options[element.selectedIndex].value
+        document.getElementById("custom_size").style.display = value == "custom" ? "block" : "none"
+      }
+
+      function showAutotunerOptions() { 
+        var value1 = document.getElementById("autotuner_options").style.display == "block"
+        document.getElementById("autotuner_options").style.display = value1 ? "none" : "block"
+
+        var value2 = document.getElementById("manual_options").style.display == "block"
+        document.getElementById("manual_options").style.display = value2 ? "none" : "block"
+      }
+    </script>
+
+  </body>
+</html>
+
