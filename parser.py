@@ -60,4 +60,5 @@ def parse_to_file(in_filename, out_filename):
     out_file = open(out_filename, "w+")
     for next_output in output:
         out_file.write(next_output)
+        out_file.write("\n - - - - - - - - - - - - - - \n")
     out_file.close()
