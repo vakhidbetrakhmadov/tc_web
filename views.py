@@ -105,13 +105,8 @@ def index_post():
 
      print(output)
      print(err)
-     
-     # err = parser.parse_string(err)[0]
-     # print(err)
 
      output = output.replace('\n', "<br>")
-     # err = err.replace('\n', "<br>")
+     output = output.replace(' ', "&nbsp;")
 
-     final_output = output
-
-     return render_template('index.html', output=final_output)
+     return render_template('index.html', output=output)
