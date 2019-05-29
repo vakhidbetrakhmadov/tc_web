@@ -84,16 +84,26 @@ def index_post():
 
      logfile_name = "/Tvm-tc/log.txt"
 
-     command = base + program_part + size_part + autotuner_part + tuner_threads_part + tuner_generations_part + pop_size_part + number_of_elites_part + load_from_cache_part + store_to_cache_part + use_shared_mem_part  + unroll_copy_shared_part + use_read_only_cache_part + match_lib_calls_part + fix_params_part  + outer_schedule_fusion_strategy_part + intra_tile_fusion_strategy_part + map_to_blocks_part + map_to_threads_part + tile_part + unroll_part + "&> {}".format(logfile_name)
+     # command = base + program_part + size_part + autotuner_part + tuner_threads_part + tuner_generations_part + pop_size_part + number_of_elites_part + load_from_cache_part + store_to_cache_part + use_shared_mem_part  + unroll_copy_shared_part + use_read_only_cache_part + match_lib_calls_part + fix_params_part  + outer_schedule_fusion_strategy_part + intra_tile_fusion_strategy_part + map_to_blocks_part + map_to_threads_part + tile_part + unroll_part + "&> {}".format(logfile_name)
+     # print(command)
 
-     print(command)
+     echo = "echo 'Hi' > {}".format(logfile_name)
+     print(echo)
 
-     subprocess.call(["echo 'Hi' > {}".format(logfile_name)], shell=True)
-     subprocess.call([command],shell=True)
-     output = parser.parse(logfile_name)
+     subprocess.call([echo], shell=True)
 
-     print("- - - -")
-     print(output)
-     print("- - - -")
+     f = open(logfile_name, "r")
+     for next_line in f:
+          print(next_line)
+     f.close()
 
-     return render_template('index.html', program=output[0])
+     # subprocess.call([command],shell=True)
+     # output = parser.parse(logfile_name)
+
+     # print("- - - -")
+     # print(output)
+     # print("- - - -")
+
+     # return render_template('index.html', program=output[0])
+
+     return render_template('index.html', program="Hi")
