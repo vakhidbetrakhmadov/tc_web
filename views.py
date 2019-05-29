@@ -72,7 +72,7 @@ def index_post():
      store_to_cache_part = "--store_to_cache=False " if isNoneOrEmpty(store_to_cache) else "--store_to_cache=True "
      use_shared_mem_part = "--useSharedMemory=False " if isNoneOrEmpty(use_shared_mem) else "--useSharedMemory=True "
      unroll_copy_shared_part = "--unrollCopyShared=False " if isNoneOrEmpty(unroll_copy_shared) else "--unrollCopyShared=True "
-     use_read_only_cache_part = "--useReaOnlyCache=False " if isNoneOrEmpty(use_read_only_cache) else "--useReaOnlyCache=True "
+     use_read_only_cache_part = "--useReadOnlyCache=False " if isNoneOrEmpty(use_read_only_cache) else "--useReadOnlyCache=True "
      match_lib_calls_part = "--matchLibraryCalls=False " if isNoneOrEmpty(match_lib_calls) else "--matchLibraryCalls=True "
      fix_params_part = "--fixParametersBeforeScheduling=False " if isNoneOrEmpty(fix_params) else "--fixParametersBeforeScheduling=True "
      outer_schedule_fusion_strategy_part = "" if isNoneOrEmpty(outer_schedule_fusion_strategy) else "--outerScheduleFusionStrategy={} ".format(outer_schedule_fusion_strategy)
