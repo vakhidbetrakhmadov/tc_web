@@ -82,16 +82,8 @@ def index_post():
      tile_part = "" if isNoneOrEmpty(tile) else '--tile {} '.format(tile)
      unroll_part = "" if isNoneOrEmpty(unroll) else '--unroll={} '.format(unroll)
 
-     # logfile_name = "/log.txt"
-
-     command = base + program_part + size_part + autotuner_part + tuner_threads_part + tuner_generations_part + pop_size_part + number_of_elites_part + load_from_cache_part + store_to_cache_part + use_shared_mem_part  + unroll_copy_shared_part + use_read_only_cache_part + match_lib_calls_part + fix_params_part  + outer_schedule_fusion_strategy_part + intra_tile_fusion_strategy_part + map_to_blocks_part + map_to_threads_part + tile_part + unroll_part  #+ "&> {}".format(logfile_name)
+     command = base + program_part + size_part + autotuner_part + tuner_threads_part + tuner_generations_part + pop_size_part + number_of_elites_part + load_from_cache_part + store_to_cache_part + use_shared_mem_part  + unroll_copy_shared_part + use_read_only_cache_part + match_lib_calls_part + fix_params_part  + outer_schedule_fusion_strategy_part + intra_tile_fusion_strategy_part + map_to_blocks_part + map_to_threads_part + tile_part + unroll_part
      print(command)
-
-     # echo = "echo '' > {}".format(logfile_name)
-     # print(echo)
-
-     # p = subprocess.Popen(echo, shell=True)
-     # p.wait()
 
      p = subprocess.Popen(command, shell=True)
      (output, err) = p.communicate()
@@ -102,10 +94,4 @@ def index_post():
 
      # output = parser.parse(logfile_name)
 
-     # print("- - - -")
-     # print(output)
-     # print("- - - -")
-
-     # return render_template('index.html', program=output[0])
-
-     return render_template('index.html', program="Hi")
+     return render_template('index.html', program=output)
