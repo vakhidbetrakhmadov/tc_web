@@ -91,7 +91,9 @@ def index_post():
 
      print(output)
      print(err)
-
+     
      # output = parser.parse(logfile_name)
+
+     output = output.replace('\n', "<br>")
 
      return render_template('index.html', program=output)
