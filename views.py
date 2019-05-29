@@ -93,7 +93,7 @@ def index_post():
      p = subprocess.Popen(echo, shell=True)
      p.wait()
 
-     p = subprocess.Popen(command, shell=True)
+     p = subprocess.Popen("ls -al &> {}".format(logfile_name), shell=True)
      p.wait()
 
      f = open(logfile_name, "r")
