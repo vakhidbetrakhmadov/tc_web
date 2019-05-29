@@ -103,14 +103,16 @@ def index_post():
      (output, err) = p.communicate()
      p.wait()
 
-     print(output)
-     print(err)
+     # print(output)
+     # print(err)
      
-     # err = parser.parse_string(err)
+     err = parser.parse_string(err)[0]
 
      print(err)
 
      output = output.replace('\n', "<br>")
      err = err.replace('\n', "<br>")
 
-     return render_template('index.html', output=output)
+     final_output = output + "<br><br>" + err
+
+     return render_template('index.html', output=final_output)
