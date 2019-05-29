@@ -88,7 +88,7 @@ def index_post():
 
      print(command)
 
-     subprocess.call(["echo '' > {}".format(logfile_name)],shell=True)
+     subprocess.call(["echo 'Hi' > {}".format(logfile_name)], shell=True)
      subprocess.call([command],shell=True)
      output = parser.parse(logfile_name)
 
