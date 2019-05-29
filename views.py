@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request
-import os
 import parser
+import subprocess
 
 main = Blueprint('main', __name__)
 
@@ -88,12 +88,12 @@ def index_post():
 
      print(command)
 
-     # os.system("echo '' > {}".format(logfile_name))
-     # os.system(command)
-     # output = parser.parse(logfile_name)
+     subprocess.run(["echo '' > {}".format(logfile_name)],shell=True)
+     subprocess.run([command],shell=True)
+     output = parser.parse(logfile_name)
 
-     # print("- - - -")
-     # print(output)
-     # print("- - - -")
+     print("- - - -")
+     print(output)
+     print("- - - -")
 
-     return render_template('index.html', program="Hello") #output[0]
+     return render_template('index.html', program=output[0])
