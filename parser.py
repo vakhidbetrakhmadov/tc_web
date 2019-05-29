@@ -1,7 +1,34 @@
 import sys
 from enum import Enum
 
-def parse(in_filename):
+def parse_string(string):
+    class State(Enum):
+        SEARCHING = 1
+        READING = 2
+
+    split_string = string.split("\n")
+    output = []
+    state = State.SEARCHING
+    buffer = ""
+    for next_line in split_string:
+        if state == State.SEARCHING:
+            if "generatedCuda:" in next_line:
+                state = State.READING
+        elif state == State.READING:
+            if "Execution time:" in next_line:
+                buffer += next_line
+                output.append(buffer)
+                buffer = ""
+                state = State.SEARCHING
+            elif "generatedCuda:" in next_line:
+                buffer = ""
+                state = State.SEARCHING
+            else:
+                buffer += next_line
+                
+    return output
+
+def parse_file(in_filename):
     class State(Enum):
         SEARCHING = 1
         READING = 2
@@ -30,7 +57,7 @@ def parse(in_filename):
 
     return output
 
-def parse_to_file(in_filename, out_filename):
+def parse_file_to_file(in_filename, out_filename):
     class State(Enum):
         SEARCHING = 1
         READING = 2
