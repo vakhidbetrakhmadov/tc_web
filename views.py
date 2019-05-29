@@ -96,4 +96,4 @@ def index_post():
 
      output = output.replace('\n', "<br>")
 
-     return render_template('index.html', program=output)
+     return render_template('index.html', output=output)
