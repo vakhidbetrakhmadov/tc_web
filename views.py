@@ -88,8 +88,8 @@ def index_post():
 
      print(command)
 
-     subprocess.run(["echo '' > {}".format(logfile_name)],shell=True)
-     subprocess.run([command],shell=True)
+     subprocess.call(["echo '' > {}".format(logfile_name)],shell=True)
+     subprocess.call([command],shell=True)
      output = parser.parse(logfile_name)
 
      print("- - - -")
