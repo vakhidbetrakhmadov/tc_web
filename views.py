@@ -82,24 +82,23 @@ def index_post():
      tile_part = "" if isNoneOrEmpty(tile) else '--tile {} '.format(tile)
      unroll_part = "" if isNoneOrEmpty(unroll) else '--unroll={} '.format(unroll)
 
-     logfile_name = "/log.txt"
+     # logfile_name = "/log.txt"
 
-     command = base + program_part + size_part + autotuner_part + tuner_threads_part + tuner_generations_part + pop_size_part + number_of_elites_part + load_from_cache_part + store_to_cache_part + use_shared_mem_part  + unroll_copy_shared_part + use_read_only_cache_part + match_lib_calls_part + fix_params_part  + outer_schedule_fusion_strategy_part + intra_tile_fusion_strategy_part + map_to_blocks_part + map_to_threads_part + tile_part + unroll_part + "&> {}".format(logfile_name)
+     command = base + program_part + size_part + autotuner_part + tuner_threads_part + tuner_generations_part + pop_size_part + number_of_elites_part + load_from_cache_part + store_to_cache_part + use_shared_mem_part  + unroll_copy_shared_part + use_read_only_cache_part + match_lib_calls_part + fix_params_part  + outer_schedule_fusion_strategy_part + intra_tile_fusion_strategy_part + map_to_blocks_part + map_to_threads_part + tile_part + unroll_part  #+ "&> {}".format(logfile_name)
      print(command)
 
-     echo = "echo '' > {}".format(logfile_name)
-     print(echo)
+     # echo = "echo '' > {}".format(logfile_name)
+     # print(echo)
 
-     p = subprocess.Popen(echo, shell=True)
+     # p = subprocess.Popen(echo, shell=True)
+     # p.wait()
+
+     p = subprocess.Popen(command, shell=True)
+     (output, err) = p.communicate()
      p.wait()
 
-     p = subprocess.Popen("ls -al &> {}".format(logfile_name), shell=True)
-     p.wait()
-
-     f = open(logfile_name, "r")
-     for next_line in f:
-          print(next_line)
-     f.close()
+     print(output)
+     print(err)
 
      # output = parser.parse(logfile_name)
 
