@@ -90,7 +90,8 @@ def index_post():
      echo = "echo {} > {}".format(command, logfile_name)
      print(echo)
 
-     subprocess.call([echo], shell=True)
+     p = subprocess.Popen(echo, shell=True)
+     p.wait()
 
      f = open(logfile_name, "r")
      for next_line in f:
