@@ -85,7 +85,7 @@ def index_post():
      command = base + program_part + size_part + autotuner_part + tuner_threads_part + tuner_generations_part + pop_size_part + number_of_elites_part + load_from_cache_part + store_to_cache_part + use_shared_mem_part  + unroll_copy_shared_part + use_read_only_cache_part + match_lib_calls_part + fix_params_part  + outer_schedule_fusion_strategy_part + intra_tile_fusion_strategy_part + map_to_blocks_part + map_to_threads_part + tile_part + unroll_part
      print(command)
 
-     p = subprocess.Popen(command, shell=True)
+     p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
      (output, err) = p.communicate()
      p.wait()
 
