@@ -104,7 +104,13 @@
       </p>
 
       <p>
-          <input type="checkbox" name="autotuner" value="true" onchange="javascript:showAutotunerOptions()"> Autotuner<br>
+          <input type="radio" name="how_to_run" id="manual" value="manual" onclick="javascript:showOptions('manual')" checked>
+          Manual &nbsp; &nbsp;
+          <input type="radio" name="how_to_run" id="autotuner" value="autotuner" onclick="javascript:showOptions('autotuner')">
+          Autotuner &nbsp; &nbsp;
+          <input type="radio" name="how_to_run" id="from_cache" value="from_cache" onclick="javascript:showOptions('from_cache')">
+          From cache &nbsp; &nbsp;
+
           <dev id="autotuner_options" style="display:none">
               <br>Threads<br>
               <input type="text" name="tuner_threads"><br>
@@ -113,7 +119,9 @@
               Population size<br>
               <input type="text" name="pop_size"><br>
               Number of elites<br>
-              <input type="text" name="number_of_elites"><br>
+              <input type="text" name="number_of_elites"><br><br>
+              <input type="checkbox" name="load_from_cache" value="true"> Load from cache<br>
+              <input type="checkbox" name="store_to_cache" value="true"> Store to cache<br>
           </dev>
       </p>
 
@@ -127,8 +135,6 @@
             <input type="text" name="tile"><br>
             Unroll<br>
             <input type="text" name="unroll"><br><br>
-            <input type="checkbox" name="load_from_cache" value="true"> Load from cache<br>
-            <input type="checkbox" name="store_to_cache" value="true"> Store to cache<br>
             <input type="checkbox" name="use_shared_mem" value="true"> Use shared memory<br>
             <input type="checkbox" name="unroll_copy_shared" value="true"> Unroll the copies to and from shared memory <br>
             <input type="checkbox" name="use_read_only_cache" value="true"> Use read only cache <br>
@@ -184,15 +190,19 @@
         document.getElementById("custom_size").style.display = value == "custom" ? "block" : "none"
       }
 
-      function showAutotunerOptions() { 
-        var value1 = document.getElementById("autotuner_options").style.display == "block"
-        document.getElementById("autotuner_options").style.display = value1 ? "none" : "block"
-
-        var value2 = document.getElementById("manual_options").style.display == "block"
-        document.getElementById("manual_options").style.display = value2 ? "none" : "block"
+      function showOptions(id) {
+        if("manual" == id) { 
+          document.getElementById("manual_options").style.display = "block"
+          document.getElementById("autotuner_options").style.display = "none"
+        } else if("autotuner" == id) { 
+          document.getElementById("manual_options").style.display = "none"
+          document.getElementById("autotuner_options").style.display = "block"
+        } else {  // from_cache
+          document.getElementById("manual_options").style.display = "none"
+          document.getElementById("autotuner_options").style.display = "none"
+        }
       }
     </script>
 
   </body>
 </html>
-
