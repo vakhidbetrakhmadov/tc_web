@@ -99,18 +99,18 @@ def index_post():
      command = base + program_part + size_part + params_part
      print(command)
 
-     # p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-     # (output, err) = p.communicate()
-     # p.wait()
+     p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+     (output, err) = p.communicate()
+     p.wait()
 
-     # print(output)
-     # print(err)
+     print(output)
+     print(err)
      
      # err = parser.parse_string(err)
 
-     # print(err)
+     print(err)
 
-     # output = output.replace('\n', "<br>")
-     # err = err.replace('\n', "<br>")
+     output = output.replace('\n', "<br>")
+     err = err.replace('\n', "<br>")
 
-     return render_template('index.html', output=command)
+     return render_template('index.html', output=output)
