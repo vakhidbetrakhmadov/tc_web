@@ -75,7 +75,7 @@ def index_post():
           pop_size = request.form.get('pop_size')
           number_of_elites = request.form.get('number_of_elites')
           load_from_cache = request.form.get('load_from_cache')
-          # store_to_cache = request.form.get('store_to_cache')
+          store_to_cache = request.form.get('store_to_cache')
 
           autotuner_part = "--autotuner=True "
           tuner_threads_part = "" if isNoneOrEmpty(tuner_threads) else '--tuner_threads={} '.format(tuner_threads)
@@ -84,7 +84,7 @@ def index_post():
           number_of_elites_part = "" if isNoneOrEmpty(number_of_elites) else '--tuner_number_elites={} '.format(number_of_elites)
           load_from_cache_part = "--load_from_cache=False " if isNoneOrEmpty(load_from_cache) else "--load_from_cache=True "
           store_to_cache_part = "" # "--store_to_cache=False " if isNoneOrEmpty(store_to_cache) else "--store_to_cache=True "
-          tuner_cache_file_part = "--tuner_cache_file={} ".format(cache_file)
+          tuner_cache_file_part = "--tuner_cache_file={} ".format(cache_file) if (!isNoneOrEmpty(load_from_cache) || isNoneOrEmpty(store_to_cache)) else ""
 
           params_part = autotuner_part + tuner_threads_part + tuner_generations_part + pop_size_part + number_of_elites_part + load_from_cache_part + store_to_cache_part + tuner_cache_file_part
      
