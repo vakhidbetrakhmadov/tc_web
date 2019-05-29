@@ -91,9 +91,9 @@ def index_post():
      os.system("echo "" > {}".format(logfile_name))
      os.system(command)
      output = parser.parse(logfile_name)
-     
+
      print("- - - -")
      print(output)
-     print("- - - -"
+     print("- - - -")
 
      return render_template('index.html', program=output[0])
