@@ -103,8 +103,8 @@ def index_post():
      (output, err) = p.communicate()
      p.wait()
 
-     # print(output)
-     # print(err)
+     print(output)
+     print(err)
      
      err = parser.parse_string(err)[0]
 
