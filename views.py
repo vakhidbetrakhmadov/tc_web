@@ -64,7 +64,7 @@ def index_post():
           match_lib_calls_part = "--matchLibraryCalls=False " if isNoneOrEmpty(match_lib_calls) else "--matchLibraryCalls=True "
           fix_params_part = "--fixParametersBeforeScheduling=False " if isNoneOrEmpty(fix_params) else "--fixParametersBeforeScheduling=True "
           outer_schedule_fusion_strategy_part = "" if isNoneOrEmpty(outer_schedule_fusion_strategy) else "--outerScheduleFusionStrategy={} ".format(outer_schedule_fusion_strategy)
-          intra_tile_fusion_strategy_part = "" if isNoneOrEmpty(intra_tile_fusion_strategy) else "--intraTileFusionStrategy={} ".format(intra_tile_fusion_strategy)
+          intra_tile_fusion_strategy_part = "" if isNoneOrEmpty(intra_tile_fusion_strategy) else "--intraTileScheduleFusionStrategy={} ".format(intra_tile_fusion_strategy)
 
           params_part = map_to_blocks_part + map_to_threads_part + tile_part + unroll_part + use_shared_mem_part + unroll_copy_shared_part + use_read_only_cache_part + match_lib_calls_part + fix_params_part + outer_schedule_fusion_strategy_part + intra_tile_fusion_strategy_part
      
