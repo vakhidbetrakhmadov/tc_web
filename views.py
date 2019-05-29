@@ -96,7 +96,7 @@ def index_post():
      
      base = "/opt/conda/anaconda/envs/tc_build/bin/python3 /Tvm-tc/tc/tc_bench.py --debug=True "
      
-     command = base + program_part + size_part + params_part
+     command = base + program_part + size_part + params_part + " 2>&1"
      print(command)
 
      p = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
